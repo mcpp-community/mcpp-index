@@ -1,0 +1,32 @@
+name: validate
+
+on:
+  pull_request:
+    paths: ["pkgs/**/*.lua"]
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Lint package descriptors
+        run: |
+          fail=0
+          for f in pkgs/*/*.lua; do
+            if grep -q "^function install" "$f"; then
+              echo "::error file=$f::install hook is forbidden"
+              fail=1
+            fi
+            if ! grep -q "mcpp = {" "$f"; then
+              echo "::error file=$f::missing mcpp = {} segment"
+              fail=1
+            fi
+            if ! grep -q 'schema *= *"0\.1"' "$f"; then
+              echo "::error file=$f::missing schema = \"0.1\""
+              fail=1
+            fi
+          done
+          [ $fail -eq 0 ] && echo "All package files valid."
+          exit $fail

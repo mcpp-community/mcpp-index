@@ -1,0 +1,5 @@
+This repository's package descriptors (.lua files) are released under
+Creative Commons Zero v1.0 Universal (CC0).
+
+The mcpp tool that consumes them is licensed under Apache-2.0; each indexed
+package has its own license declared in its own xpkg descriptor.
