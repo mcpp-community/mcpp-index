@@ -32,11 +32,14 @@ package = {
     },
 
     -- Workaround: upstream repo has no mcpp.toml. Drop this segment when it does.
+    -- M6.x: Form B paths are globs relative to the verdir (the untouched
+    -- xlings extract dir). The leading `*/` absorbs the GitHub tarball's
+    -- `cmdline-<tag>/` wrap layer.
     mcpp = {
         language   = "c++23",
         import_std = true,
         modules    = { "mcpplibs.cmdline" },
-        sources    = { "src/**/*.cppm" },
+        sources    = { "*/src/**/*.cppm" },
         targets    = { ["cmdline"] = { kind = "lib" } },
         deps       = { },
     },
