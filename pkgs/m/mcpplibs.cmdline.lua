@@ -1,7 +1,13 @@
--- Hand-written workaround entry.
--- Upstream repo (mcpplibs/cmdline) has no mcpp.toml; the `mcpp = {}` block
--- below carries the build info mcpp would otherwise read from mcpp.toml.
--- Drop the `mcpp = {}` segment when the upstream repo adopts mcpp.toml natively.
+-- Form B (inline mcpp = { ... }) carries the build info for ALL listed versions.
+-- 0.0.2+ ships an upstream `mcpp.toml`, but `mcpp` is a package-level field
+-- (not per-version) in xpkg.lua, so to keep 0.0.1 installable we keep the
+-- workaround table here. The src/**/*.cppm layout is identical across 0.0.1
+-- and 0.0.2, so a single Form B block describes both versions correctly.
+-- When 0.0.1 is dropped, this can be replaced with `mcpp = "*/mcpp.toml"`.
+--
+-- M6.x: Form B paths are globs relative to the verdir (the untouched
+-- xlings extract dir). The leading `*/` absorbs the GitHub tarball's
+-- `cmdline-<tag>/` wrap layer.
 package = {
     spec        = "1",
     name        = "mcpplibs.cmdline",
@@ -16,11 +22,19 @@ package = {
                 url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/0.0.1.tar.gz",
                 sha256 = "3fb2f5495c1a144485b3cbb2e43e27059151633460f702af0f3851cbff387ef0",
             },
+            ["0.0.2"] = {
+                url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/v0.0.2.tar.gz",
+                sha256 = "4f3e2b8dc4d9f11bdd9a784a9914e889234ac305e1020282ffa03f506b75d52a",
+            },
         },
         macosx = {
             ["0.0.1"] = {
                 url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/0.0.1.tar.gz",
                 sha256 = "3fb2f5495c1a144485b3cbb2e43e27059151633460f702af0f3851cbff387ef0",
+            },
+            ["0.0.2"] = {
+                url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/v0.0.2.tar.gz",
+                sha256 = "4f3e2b8dc4d9f11bdd9a784a9914e889234ac305e1020282ffa03f506b75d52a",
             },
         },
         windows = {
@@ -28,14 +42,15 @@ package = {
                 url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/0.0.1.tar.gz",
                 sha256 = "3fb2f5495c1a144485b3cbb2e43e27059151633460f702af0f3851cbff387ef0",
             },
+            ["0.0.2"] = {
+                url    = "https://github.com/mcpplibs/cmdline/archive/refs/tags/v0.0.2.tar.gz",
+                sha256 = "4f3e2b8dc4d9f11bdd9a784a9914e889234ac305e1020282ffa03f506b75d52a",
+            },
         },
     },
 
-    -- Workaround: upstream repo has no mcpp.toml. Drop this segment when it does.
-    -- M6.x: Form B paths are globs relative to the verdir (the untouched
-    -- xlings extract dir). The leading `*/` absorbs the GitHub tarball's
-    -- `cmdline-<tag>/` wrap layer.
     mcpp = {
+        schema     = "0.1",
         language   = "c++23",
         import_std = true,
         modules    = { "mcpplibs.cmdline" },
