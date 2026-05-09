@@ -1,44 +1,25 @@
 # mcpp-index
 
-> Package index registry for the [`mcpp`](https://github.com/mcpp-community/mcpp) build tool.
-
-This repository indexes modular C++23 packages that follow the
-[xpkg v1 spec](https://github.com/d2learn/xim-pkgindex/blob/main/docs/V1/xpackage-spec.md)
-plus the [mcpp extension segment](https://github.com/mcpp-community/mcpp/blob/dev/docs/04-schema-xpkg-extension.md).
-
-## How is this different from xim-pkgindex / mcpplibs-index?
-
-| Repo | Format | Build tool | Status |
-|------|--------|------------|--------|
-| [`d2learn/xim-pkgindex`](https://github.com/d2learn/xim-pkgindex) | xpkg v1 (Lua) | xlings + various | Official xlings index |
-| [`mcpplibs/mcpplibs-index`](https://github.com/mcpplibs/mcpplibs-index) | xmake `package(...)` | xmake | mcpplibs xmake-style index |
-| **`mcpp-community/mcpp-index`** (this) | xpkg v1 + mcpp ext | mcpp | Modular-only, mcpp-driven |
-
-## Layout
-
-```
-pkgs/<letter>/<package>.lua    Each indexed package
-docs/                           Contributor docs
-.github/workflows/              CI: lint, validate, deploy
-```
-
-## Using this index
-
-mcpp registers `mcpp-index` automatically as the default registry. With a
-fresh `mcpp` install:
+> Default package registry for [`mcpp`](https://github.com/mcpp-community/mcpp).
+> Browse: **https://mcpp-community.github.io/mcpp-index/**
 
 ```bash
-mcpp env                                     # initializes ~/.mcpp/registry/
-mcpp search hello                             # searches mcpp-index
-mcpp add mcpplibs.templates@0.0.1             # adds to your project's mcpp.toml
-mcpp build                                    # mcpp pulls source via xlings, builds
+mcpp add mcpplibs.cmdline@0.0.2     # → updates mcpp.toml
+mcpp build                            # → fetches sources, builds
 ```
 
 ## Adding a package
 
-See [docs/19-creating-mcpp-index.md](https://github.com/mcpp-community/mcpp/blob/dev/docs/19-creating-mcpp-index.md) in the mcpp repo.
+Drop one [xpkg V1](https://github.com/d2learn/xim-pkgindex/blob/main/docs/V1/xpackage-spec.md)
+descriptor at `pkgs/<first-letter>/<name>.lua`. Existing files (e.g.
+[`pkgs/m/mbedtls.lua`](pkgs/m/mbedtls.lua),
+[`pkgs/l/lua.lua`](pkgs/l/lua.lua)) are the canonical templates;
+the [mcpp extension](https://github.com/mcpp-community/mcpp/blob/main/docs/04-schema-xpkg-extension.md)
+covers the optional `mcpp = { ... }` segment for upstreams that
+don't ship their own `mcpp.toml`. Open a PR — the `validate`
+workflow lint-checks descriptors, the `deploy-site` workflow
+republishes the browse site after merge.
 
 ## License
 
-Package descriptions: CC0 (metadata is uncopyrightable). Each indexed package
-has its own license.
+Descriptors: CC0. Each indexed upstream keeps its own license.

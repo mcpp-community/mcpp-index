@@ -1,0 +1,63 @@
+name: deploy-site
+
+# Render `pkgs/**/*.lua` into a static HTML browser via xpkgindex and
+# publish to GitHub Pages. Re-runs on any pkgs/ change merged into main,
+# and can be kicked off manually for theme/config tweaks.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'pkgs/**'
+      - '.xpkgindex.json'
+      - '.github/workflows/deploy-site.yml'
+  workflow_dispatch:
+
+# GITHUB_TOKEN scopes for the deploy step.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One concurrent run per ref; in-flight runs get cancelled when a new
+# push arrives (the latest deploy is always the one we want live).
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install xpkgindex
+        run: pip install git+https://github.com/openxlings/xpkgindex.git
+      - name: Generate static site
+        env:
+          # xpkgindex >= Apr 2026 surfaces these on the About page.
+          XPKGINDEX_BUILD_TIME:       ${{ github.event.head_commit.timestamp }}
+          XPKGINDEX_BUILD_COMMIT:     ${{ github.sha }}
+          XPKGINDEX_BUILD_COMMIT_URL: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+        run: |
+          # workflow_dispatch leaves head_commit.timestamp empty.
+          if [ -z "$XPKGINDEX_BUILD_TIME" ]; then
+            XPKGINDEX_BUILD_TIME=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+            export XPKGINDEX_BUILD_TIME
+          fi
+          xpkgindex generate . --output site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

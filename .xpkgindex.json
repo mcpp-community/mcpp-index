@@ -1,0 +1,32 @@
+{
+  "site": {
+    "title": "mcpp Package Index",
+    "description": "Modular C++23 packages for the mcpp build tool",
+    "logo": "mcpp Package Index"
+  },
+  "links": {
+    "github": "https://github.com/mcpp-community/mcpp-index",
+    "custom": [
+      {"label": "mcpp",          "url": "https://github.com/mcpp-community/mcpp"},
+      {"label": "xpkg V1 spec",  "url": "https://github.com/d2learn/xim-pkgindex/blob/main/docs/V1/xpackage-spec.md"},
+      {"label": "mcpp ext",      "url": "https://github.com/mcpp-community/mcpp/blob/main/docs/04-schema-xpkg-extension.md"}
+    ]
+  },
+  "about": {
+    "project_name": "mcpp",
+    "project_url": "https://github.com/mcpp-community/mcpp",
+    "description": "Modern C++23 build & package management tool — modules-first, xlings-driven, single-binary install",
+    "maintainers": ["mcpp-community"],
+    "license": "Apache-2.0"
+  },
+  "theme": {
+    "primary_color": "#00d4ff",
+    "style": "dark"
+  },
+  "install_command_template": "mcpp add {name}@{version}",
+  "pkgs_dir": "pkgs",
+  "install_commands": {
+    "unix":    "curl -fsSL https://github.com/mcpp-community/mcpp/releases/latest/download/install.sh | bash",
+    "windows": "iwr https://github.com/mcpp-community/mcpp/releases/latest/download/install.sh -useb | bash"
+  }
+}
