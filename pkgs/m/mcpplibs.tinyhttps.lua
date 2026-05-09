@@ -15,17 +15,29 @@ package = {
                 url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.1.tar.gz",
                 sha256 = "88adc68b1c1ec635c409604547fdfe8486aa1b376bad28c74858ed1f3ce5391c",
             },
+            ["0.2.2"] = {
+                url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.2.tar.gz",
+                sha256 = "bc4cb59475826a975dd0408b59a00cf41c4aa4078a0fc2e54929bde7fb696248",
+            },
         },
         macosx = {
             ["0.2.1"] = {
                 url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.1.tar.gz",
                 sha256 = "88adc68b1c1ec635c409604547fdfe8486aa1b376bad28c74858ed1f3ce5391c",
             },
+            ["0.2.2"] = {
+                url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.2.tar.gz",
+                sha256 = "bc4cb59475826a975dd0408b59a00cf41c4aa4078a0fc2e54929bde7fb696248",
+            },
         },
         windows = {
             ["0.2.1"] = {
                 url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.1.tar.gz",
                 sha256 = "88adc68b1c1ec635c409604547fdfe8486aa1b376bad28c74858ed1f3ce5391c",
+            },
+            ["0.2.2"] = {
+                url    = "https://github.com/mcpplibs/tinyhttps/archive/refs/tags/0.2.2.tar.gz",
+                sha256 = "bc4cb59475826a975dd0408b59a00cf41c4aa4078a0fc2e54929bde7fb696248",
             },
         },
     },
