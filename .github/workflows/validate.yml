@@ -2,7 +2,7 @@ name: validate
 
 on:
   pull_request:
-    paths: ["pkgs/**/*.lua"]
+    paths: ["pkgs/**/*.lua", ".github/workflows/validate.yml"]
   push:
     branches: [main]
 
@@ -11,22 +11,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install lua
+        run: sudo apt-get install -y --no-install-recommends lua5.4
       - name: Lint package descriptors
         run: |
           fail=0
           for f in pkgs/*/*.lua; do
+            # 1. Forbidden install hook (security: descriptors must not run code)
             if grep -q "^function install" "$f"; then
               echo "::error file=$f::install hook is forbidden"
               fail=1
             fi
-            if ! grep -q "mcpp = {" "$f"; then
-              echo "::error file=$f::missing mcpp = {} segment"
+            # 2. Lua syntax check — load (= compile) without executing.
+            #    `loadfile(name, 't')` rejects bytecode and parses text only.
+            if ! lua5.4 -e "assert(loadfile('$f', 't'))" >/dev/null 2>&1; then
+              echo "::error file=$f::lua syntax error"
               fail=1
             fi
-            if ! grep -q 'schema *= *"0\.1"' "$f"; then
-              echo "::error file=$f::missing schema = \"0.1\""
-              fail=1
-            fi
+            # 3. xpkg V1 baseline: the file has to populate `package = { ... }`
+            #    with at least `spec`, `name`, and an `xpm` table. Form A vs
+            #    Form B (mcpp = "<path>" / mcpp = { ... }) is descriptor-author
+            #    choice and not enforced here.
+            for needle in 'spec *=' 'name *=' 'xpm *='; do
+              if ! grep -q "$needle" "$f"; then
+                echo "::error file=$f::missing required field ($needle)"
+                fail=1
+              fi
+            done
           done
           [ $fail -eq 0 ] && echo "All package files valid."
           exit $fail
