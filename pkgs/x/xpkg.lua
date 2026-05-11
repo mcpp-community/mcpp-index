@@ -3,6 +3,7 @@
 -- finds <verdir>/libxpkg-<tag>/mcpp.toml inside the GitHub tarball wrap.
 package = {
     spec        = "1",
+    namespace = "mcpplibs",
     name        = "mcpplibs.xpkg",
     description = "C++23 reference implementation of the xpkg V1 spec — `import mcpplibs.xpkg;`",
     licenses    = {"Apache-2.0"},

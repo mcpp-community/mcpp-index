@@ -3,6 +3,7 @@
 -- finds <verdir>/lua-<tag>/mcpp.toml inside the GitHub tarball wrap.
 package = {
     spec        = "1",
+    namespace = "mcpplibs.capi",
     name        = "mcpplibs.capi.lua",
     description = "C++23 module wrapping the Lua 5.4 C API — `import mcpplibs.capi.lua;`",
     licenses    = {"Apache-2.0"},

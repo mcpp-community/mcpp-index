@@ -3,6 +3,7 @@
 -- wrap (`llmapi-<tag>/mcpp.toml`) automatically.
 package = {
     spec        = "1",
+    namespace = "mcpplibs",
     name        = "mcpplibs.llmapi",
     description = "Modern C++ LLM API client with openai-compatible support",
     licenses    = {"Apache-2.0"},
