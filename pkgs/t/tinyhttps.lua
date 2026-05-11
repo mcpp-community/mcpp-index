@@ -3,7 +3,8 @@
 -- finds <verdir>/<repo-tag>/mcpp.toml inside the GitHub tarball wrap.
 package = {
     spec        = "1",
-    name        = "mcpplibs.tinyhttps",
+    namespace = "mcpplibs",
+    name      = "tinyhttps",
     description = "Minimal C++23 HTTP/HTTPS client with SSE streaming support",
     licenses    = {"Apache-2.0"},
     repo        = "https://github.com/mcpplibs/tinyhttps",

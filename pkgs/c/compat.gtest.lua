@@ -5,7 +5,8 @@
 
 package = {
     spec        = "1",
-    name        = "gtest",
+    namespace = "compat",
+    name      = "gtest",
     description = "Google's C++ test framework",
     licenses    = {"BSD-3-Clause"},
     repo        = "https://github.com/google/googletest",

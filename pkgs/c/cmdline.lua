@@ -10,7 +10,8 @@
 -- `cmdline-<tag>/` wrap layer.
 package = {
     spec        = "1",
-    name        = "mcpplibs.cmdline",
+    namespace = "mcpplibs",
+    name      = "cmdline",
     description = "A simple command-line parsing library/framework for modern C++",
     licenses    = {"Apache-2.0"},
     repo        = "https://github.com/mcpplibs/cmdline",

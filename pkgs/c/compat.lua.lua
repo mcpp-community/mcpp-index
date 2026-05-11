@@ -11,7 +11,8 @@
 
 package = {
     spec        = "1",
-    name        = "lua",
+    namespace = "compat",
+    name      = "lua",
     description = "A powerful, efficient, lightweight, embeddable scripting language",
     licenses    = {"MIT"},
     repo        = "https://www.lua.org",

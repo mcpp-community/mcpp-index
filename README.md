@@ -7,24 +7,43 @@
 ## 快速使用
 
 ```bash
-mcpp add ftxui@6.1.9       # 添加依赖到 mcpp.toml
-mcpp build                  # 自动拉取源码 + 构建
+mcpp add mcpplibs:cmdline@0.0.2    # 模块化库
+mcpp add compat:ftxui@6.1.9       # 非模块化兼容库
+mcpp build                         # 自动拉取源码 + 构建
 ```
+
+## 命名空间
+
+mcpp 0.0.6+ 使用显式 `namespace` 字段区分包的类别:
+
+| namespace | 含义 | 鼓励使用 |
+|---|---|---|
+| `mcpplibs` | 模块化 C++23 库(mcpplibs 生态) | ✅ 推荐 |
+| `mcpplibs.capi` | C API 的 C++23 模块封装 | ✅ 推荐 |
+| `compat` | 非模块化 C/C++ 库(兼容性支持) | ⚠️ 建议优先使用模块化替代 |
 
 ## 已收录的包
 
-### mcpplibs 模块化库
+### `mcpplibs` — 模块化库
 
 | 包名 | 版本 | 简介 | 仓库 |
 |------|------|------|------|
-| `mcpplibs.cmdline` | 0.0.2 | 命令行解析框架 — `import mcpplibs.cmdline;` | [mcpplibs/cmdline](https://github.com/mcpplibs/cmdline) |
-| `mcpplibs.tinyhttps` | 0.2.2 | 轻量 HTTP/HTTPS 客户端(SSE 流式) — `import mcpplibs.tinyhttps;` | [mcpplibs/tinyhttps](https://github.com/mcpplibs/tinyhttps) |
-| `mcpplibs.llmapi` | 0.2.5 | 大语言模型 API 客户端(OpenAI/Anthropic 兼容) — `import mcpplibs.llmapi;` | [mcpplibs/llmapi](https://github.com/mcpplibs/llmapi) |
-| `mcpplibs.capi.lua` | 0.0.3 | Lua 5.4 C API 的 C++23 模块封装 — `import mcpplibs.capi.lua;` | [mcpplibs/lua](https://github.com/mcpplibs/lua) |
-| `mcpplibs.xpkg` | 0.0.39 | xpkg V1 规范的 C++23 参考实现 — `import mcpplibs.xpkg;` | [openxlings/libxpkg](https://github.com/openxlings/libxpkg) |
-| `mcpplibs.templates` | 0.0.1 | 最小化模块库模板 — `import mcpplibs.templates;` | [mcpplibs/templates](https://github.com/mcpplibs/templates) |
+| `cmdline` | 0.0.2 | 命令行解析框架 — `import mcpplibs.cmdline;` | [mcpplibs/cmdline](https://github.com/mcpplibs/cmdline) |
+| `tinyhttps` | 0.2.2 | 轻量 HTTP/HTTPS 客户端(SSE 流式) — `import mcpplibs.tinyhttps;` | [mcpplibs/tinyhttps](https://github.com/mcpplibs/tinyhttps) |
+| `llmapi` | 0.2.5 | 大语言模型 API 客户端(OpenAI/Anthropic 兼容) — `import mcpplibs.llmapi;` | [mcpplibs/llmapi](https://github.com/mcpplibs/llmapi) |
+| `xpkg` | 0.0.39 | xpkg V1 规范的 C++23 参考实现 — `import mcpplibs.xpkg;` | [openxlings/libxpkg](https://github.com/openxlings/libxpkg) |
+| `templates` | 0.0.1 | 最小化模块库模板 — `import mcpplibs.templates;` | [mcpplibs/templates](https://github.com/mcpplibs/templates) |
 
-### 第三方 C/C++ 库
+### `mcpplibs.capi` — C API 封装
+
+| 包名 | 版本 | 简介 | 仓库 |
+|------|------|------|------|
+| `lua` | 0.0.3 | Lua 5.4 C API 的 C++23 模块封装 — `import mcpplibs.capi.lua;` | [mcpplibs/lua](https://github.com/mcpplibs/lua) |
+
+### `compat` — 非模块化兼容库
+
+> 这些库的上游没有 C++23 模块化支持,mcpp 通过 Form B 描述文件提供兼容性构建。
+> 建议优先使用对应的模块化封装(如 `mcpplibs.capi.lua` 替代 `compat.lua`)。
 
 | 包名 | 版本 | 简介 |
 |------|------|------|
@@ -36,13 +55,13 @@ mcpp build                  # 自动拉取源码 + 构建
 ### 依赖关系链
 
 ```
-mcpplibs.llmapi
-  └── mcpplibs.tinyhttps
-        └── mbedtls              ← mcpp 自动传递,无需手动声明
+mcpplibs:llmapi
+  └── mcpplibs:tinyhttps
+        └── compat:mbedtls       ← mcpp 自动传递,无需手动声明
 
-mcpplibs.xpkg
-  └── mcpplibs.capi.lua
-        └── lua                  ← 同上
+mcpplibs:xpkg
+  └── mcpplibs.capi:lua
+        └── compat:lua           ← 同上
 ```
 
 mcpp 0.0.3+ 的 transitive walker 自动沿链路传播头文件和依赖,消费者只需声明直接依赖。
