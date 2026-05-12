@@ -21,7 +21,7 @@ mcpp build                  # 自动拉取源码 + 构建
 | `mcpplibs.tinyhttps` | 0.2.2 | 轻量 HTTP/HTTPS 客户端(SSE 流式) — `import mcpplibs.tinyhttps;` | [mcpplibs/tinyhttps](https://github.com/mcpplibs/tinyhttps) |
 | `mcpplibs.llmapi` | 0.2.5 | 大语言模型 API 客户端(OpenAI/Anthropic 兼容) — `import mcpplibs.llmapi;` | [mcpplibs/llmapi](https://github.com/mcpplibs/llmapi) |
 | `mcpplibs.capi.lua` | 0.0.3 | Lua 5.4 C API 的 C++23 模块封装 — `import mcpplibs.capi.lua;` | [mcpplibs/lua](https://github.com/mcpplibs/lua) |
-| `mcpplibs.xpkg` | 0.0.39 | xpkg V1 规范的 C++23 参考实现 — `import mcpplibs.xpkg;` | [openxlings/libxpkg](https://github.com/openxlings/libxpkg) |
+| `mcpplibs.xpkg` | 0.0.40 | xpkg V1 规范的 C++23 参考实现 — `import mcpplibs.xpkg;` | [openxlings/libxpkg](https://github.com/openxlings/libxpkg) |
 | `mcpplibs.templates` | 0.0.1 | 最小化模块库模板 — `import mcpplibs.templates;` | [mcpplibs/templates](https://github.com/mcpplibs/templates) |
 
 ### 第三方 C/C++ 库
@@ -58,7 +58,8 @@ mcpp 0.0.3+ 的 transitive walker 自动沿链路传播头文件和依赖,消费
 ```lua
 package = {
     spec = "1",
-    name = "mcpplibs.tinyhttps",
+    namespace = "mcpplibs",
+    name = "tinyhttps",
     xpm = {
         linux   = { ["0.2.2"] = { url = "...", sha256 = "..." } },
         macosx  = { ["0.2.2"] = { url = "...", sha256 = "..." } },
@@ -103,7 +104,7 @@ cd ~/.mcpp/registry/data/mcpp-index && git pull
 ## 添加新包
 
 1. Fork 本仓库
-2. 在 `pkgs/<首字母>/` 下创建 `<包名>.lua`,参考现有文件([mbedtls.lua](pkgs/m/mbedtls.lua)、[ftxui.lua](pkgs/f/ftxui.lua))
+2. 在 `pkgs/<首字母>/` 下创建 `<包名>.lua`,参考现有文件([compat.mbedtls.lua](pkgs/c/compat.mbedtls.lua)、[compat.ftxui.lua](pkgs/c/compat.ftxui.lua))
 3. 提交 PR — `validate` workflow 自动 lint,`deploy-site` 合入后自动发布到浏览站
 
 详细格式说明见 [mcpp 扩展字段文档](https://github.com/mcpp-community/mcpp/blob/main/docs/04-schema-xpkg-extension.md)。
