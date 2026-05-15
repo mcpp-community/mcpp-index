@@ -12,6 +12,10 @@ package = {
 
     xpm = {
         linux = {
+            ["0.0.41"] = {
+                url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.41.tar.gz",
+                sha256 = "d4a0dc6df0388858415cf6899dd1aa6d5d8b9836f1f81c9687b0b34fb7ee0e2e",
+            },
             ["0.0.40"] = {
                 url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.40.tar.gz",
                 sha256 = "95fd6d7b2c044578830015fd5b1dceaafd5c0dbadc04a0c78e82d380405e193f",
@@ -22,6 +26,10 @@ package = {
             },
         },
         macosx = {
+            ["0.0.41"] = {
+                url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.41.tar.gz",
+                sha256 = "d4a0dc6df0388858415cf6899dd1aa6d5d8b9836f1f81c9687b0b34fb7ee0e2e",
+            },
             ["0.0.40"] = {
                 url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.40.tar.gz",
                 sha256 = "95fd6d7b2c044578830015fd5b1dceaafd5c0dbadc04a0c78e82d380405e193f",
@@ -32,6 +40,10 @@ package = {
             },
         },
         windows = {
+            ["0.0.41"] = {
+                url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.41.tar.gz",
+                sha256 = "d4a0dc6df0388858415cf6899dd1aa6d5d8b9836f1f81c9687b0b34fb7ee0e2e",
+            },
             ["0.0.40"] = {
                 url    = "https://github.com/openxlings/libxpkg/archive/refs/tags/v0.0.40.tar.gz",
                 sha256 = "95fd6d7b2c044578830015fd5b1dceaafd5c0dbadc04a0c78e82d380405e193f",
